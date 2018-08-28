@@ -756,9 +756,9 @@ defmodule Facebook do
   def decode_signed_request(signed_request) do
     with [signature_str | [payload_str | _]]
            <- String.split(signed_request, "."),
-         {:ok, signature} <- Base.url_decode64(signature_str),
+         {:ok, signature} <- Base.url_decode64(signature_str, padding: false),
          _signature_verification = ^signature <- signature(payload_str),
-         {:ok, payload} <- Base.url_decode64(payload_str),
+         {:ok, payload} <- Base.url_decode64(payload_str, padding: false),
          {:ok, payload} <- JSON.decode(payload)
     do
       {:ok, payload}

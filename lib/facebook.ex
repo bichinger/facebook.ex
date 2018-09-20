@@ -767,6 +767,21 @@ defmodule Facebook do
     end
   end
 
+  @doc """
+  Sends an app-to-user notification.
+  """
+  @spec notify_user(object_id, type :: String.t, type :: String.t) :: resp
+  def notify_user(user_id, message, href) do
+    params = [href: href,
+              template: message
+             ]
+             |> add_app_access_token()
+
+    ~s(/#{user_id}/notifications)
+      |> GraphAPI.post("", [], params: params)
+      |> ResponseFormatter.format_response
+  end
+
   # Builds a signature just like Facebook does for its signed_requests.
   def sign(payload) do
     payload_str = Base.url_encode64(payload)

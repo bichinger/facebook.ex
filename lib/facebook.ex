@@ -769,6 +769,10 @@ defmodule Facebook do
 
   @doc """
   Sends an app-to-user notification.
+  Needs the app access token from the configuration.
+  user_id is an app-scoped user id
+  See:
+  * https://developers.facebook.com/docs/games/services/appnotifications
   """
   @spec notify_user(object_id, type :: String.t, type :: String.t) :: resp
   def notify_user(user_id, message, href) do
